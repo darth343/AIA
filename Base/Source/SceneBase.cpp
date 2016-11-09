@@ -129,17 +129,11 @@ void SceneBase::Init()
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//calibri.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
-	meshList[GEO_TILESET1] = MeshBuilder::GenerateTileSet("GEO_TILESET", 97, 8);
+	meshList[GEO_TILESET1] = MeshBuilder::GenerateTileSet("GEO_TILESET", 80, 8);
 	meshList[GEO_TILESET1]->textureID = LoadTGA("Image//moderntileset.tga");
 
 	Math::InitRNG();
 	camera.Init(Vector3(0, 0, 10), Vector3(0, 0, 0), Vector3(0, 1, 0));
-
-	//// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
-	//Mtx44 perspective;
-	//perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
-	////perspective.SetToOrtho(-80, 80, -60, 60, -1000, 1000);
-	//projectionStack.LoadMatrix(perspective);
 }
 
 void SceneBase::RenderTile(Mesh* mesh, unsigned tileID, float size, float x, float y)
