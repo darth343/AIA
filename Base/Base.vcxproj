@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\Bus.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\Camera3.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
@@ -27,10 +28,12 @@
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\SoundManager.cpp" />
     <ClCompile Include="Source\SpriteAnimation.cpp" />
+    <ClCompile Include="Source\Train.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\Bus.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\Camera3.h" />
     <ClInclude Include="Source\CharacterData.h" />
@@ -51,6 +54,7 @@
     <ClInclude Include="Source\SoundManager.h" />
     <ClInclude Include="Source\SpriteAnimation.h" />
     <ClInclude Include="Source\Tile.h" />
+    <ClInclude Include="Source\Train.h" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />
   </ItemGroup>
