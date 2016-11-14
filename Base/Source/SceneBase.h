@@ -8,6 +8,8 @@
 #include "Light.h"
 #include "CharacterData.h"
 #include "Map.h"
+#include "Train.h"
+
 class SceneBase : public Scene
 {
 	enum UNIFORM_TYPE
@@ -58,6 +60,7 @@ public:
 		GEO_BACKGROUND,
 		GEO_TILESET1,
 		GEO_COMMUTER,
+		GEO_TRAIN,
 		GEO_TEXT,
 		NUM_GEOMETRY,
 	};
@@ -91,6 +94,8 @@ protected:
 	float fps;
 	float xtranslate;
 	float ytranslate;
+
+	Train Train2;
 };
 
 #endif // !SCENEBASE_H

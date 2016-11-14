@@ -35,6 +35,8 @@ void Scene1::Init()
 	m_cMap->Init(Application::GetInstance().GetScreenHeight(), Application::GetInstance().GetScreenWidth(), 24);
 	m_cMap->LoadMap("Data//testMap.csv");
 	//std::cout << m_cMap->GetNumOfTiles_Height() << m_cMap->GetNumOfTiles_Width() << std::endl;
+
+	// Commuters
 	GameObject* commuter1 = new GameObject();
 	commuter1->active = true;
 	commuter1->type = GameObject::GO_COMMUTER;
@@ -43,6 +45,64 @@ void Scene1::Init()
 	commuter1->ObjectTileHeight = 2;
 	commuter1->ObjectTileWidth = 6;
 	m_goList.push_back(commuter1);
+
+	// Train
+	m_Train = new Train;
+	m_Train->type = GameObject::GO_TRAIN;
+	m_Train->active = true;
+	m_Train->scale = m_cMap->GetTileSize();
+	m_Train->position.Set(27, 547, 0);
+	m_Train->ObjectTileHeight = 2.5;
+	m_Train->ObjectTileWidth = 8;
+	m_goList.push_back(m_Train);
+
+	TrainStation.Set(27, 547, 0);
+	EndPosition.Set(675, 547, 0);
+}
+
+void Scene1::TrainUpdate(double dt)
+{
+	Train1.TrainUpdate(dt);
+
+	// Check if train in Move state
+	if (Train1.getTrainState() == 3)
+	{
+		// Check if train pos is TO state
+		if (Train1.getTrainPosState() == 0)
+		{
+			// If the Train x is smaller than the End x
+			if (m_Train->position.x < EndPosition.x)
+			{
+				m_Train->MoveTO(dt);
+			}
+			// When the Train reach the end, change the train pos state to FROM state
+			else
+			{
+				Train1.setTrainPosState(1);
+			}
+		}
+
+		// Check if train pos is FROM state
+		if (Train1.getTrainPosState() == 1)
+		{
+			// If the Train x is bigger than the Station x
+			if (m_Train->position.x > TrainStation.x)
+			{
+				m_Train->MoveFROM(dt);
+			}
+			// When the Train reach back to the station, change the train pos state to NONE
+			else
+			{
+				Train1.setTrainPosState(2);
+			}
+		}
+		
+	}
+	else // When train change to Stop state
+	{
+		// Set the trainPos state to NONE state
+		Train1.setTrainPosState(2);
+	}
 }
 
 void Scene1::PlayerUpdate(double dt)
@@ -60,6 +120,8 @@ void Scene1::MapUpdate(double dt)
 void Scene1::Update(double dt)
 {
 	SceneBase::Update(dt);
+	TrainUpdate(dt);
+
 	fps = (float)(1.f / dt);
 
 	for (int i = 0; i < m_goList.size(); ++i)
@@ -115,6 +177,15 @@ void Scene1::RenderGO()
 				}
 			}
 			break;
+		case GameObject::GO_TRAIN:
+			for (int j = 0; j < m_goList[i]->ObjectTileWidth; j++)
+			{
+				for (int k = 0; k < m_goList[i]->ObjectTileHeight; k++)
+				{
+					Render2DMesh(meshList[GEO_TRAIN], false, m_cMap->GetTileSize() * 0.5, m_goList[i]->position.x + (j * m_cMap->GetTileSize() * 0.5), m_goList[i]->position.y + (k * m_cMap->GetTileSize() * 0.5), false);
+				}
+			}
+			break;
 		}
 	}
 }
@@ -123,7 +194,7 @@ void Scene1::Render()
 {
 	SceneBase::Render();
 	RenderMap();
-	//RenderGO();
+	RenderGO();
 }
 
 void Scene1::Exit()

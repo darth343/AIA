@@ -12,6 +12,7 @@ public:
 	{
 		GO_NONE,
 		GO_COMMUTER,
+		GO_TRAIN,
 		GO_TOTAL,
 	};
 

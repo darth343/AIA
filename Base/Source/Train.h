@@ -3,39 +3,63 @@
 
 #include "GameObject.h"
 
-class Train
+#include <time.h>     // time
+#include <stdio.h>    // NULL
+#include <stdlib.h>   // srand, rand
+
+class Train : public GameObject
 {
 public:
 
 	enum TRAIN_STATES
 	{
-		S_MOVE,
-		S_STOP,
+		S_STOP = 0,
 		S_OPEN,
 		S_CLOSE,
+		S_MOVE,
+	};
+
+	enum TRAIN_POS
+	{
+		P_TO = 0,
+		P_FROM,
+		P_NONE,
 	};
 
 	Train();
 	~Train();
 
-	virtual void Update(double dt);
-	// checks if all the commuters hazzzzz boarded or all the commuters havvve alighted
+	virtual void TrainUpdate(double dt);
+	// Checks if all the commuters have boarded and all the commuters have alighted
 	bool checkTrainIsReady();
-	// getters and setters
+
+	// Getters and setters
 	void setCommutersBoarded(int x);
 	int getCommutersBoarded();
 	void setCommutersAlighted(int x);
 	int getCommutersAlighted();
-	// probabilities
+	int getTrainPosState();
+	void setTrainPosState(int x);
+	int getTrainState();
+	float getTimer();
 
+	// Train move TO endPos
+	void MoveTO(double dt);
+	// Train move FROM endPos
+	void MoveFROM(double dt);
+
+	
 
 private:
-
-	Vector3 position;
-	float timer;
-	int commutersBoarded;
-	int commutersAlighted;
-	const int totalCommuters = 100;
+	TRAIN_STATES TrainState;
+	TRAIN_POS    TrainPos;
+	float timer;							// Timer 
+	const float speed = 800.f;				// Train speed
+	const int maxCommuters = 100;			// Max commuters on the train
+	Vector3 trainPos, stationPos, endPos;   // Positions
+	int commBoarding;						// Number of commuters boarding
+	int commAlighting;						// Number of commuters alighting
+	bool open;								// 
 
 };
 

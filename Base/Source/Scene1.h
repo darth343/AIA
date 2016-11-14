@@ -6,7 +6,7 @@
 #include "PlayerInfo.h"
 #include "GameObject.h"
 #include "CharacterData.h"
-
+#include "Train.h"
 
 class Scene1 : public SceneBase
 {
@@ -22,12 +22,16 @@ public:
 	void RenderMap();
 	void RenderGO();
 	//Update Functions
-	void PlayerUpdate(double dt); // Update to the player 
-	void GOupdate(double dt); // Main GO Collisions
+	void PlayerUpdate(double dt);			// Update to the player 
+	void GOupdate(double dt);				// Main GO Collisions
 	void MapUpdate(double dt);
+	void TrainUpdate(double dt);			// Update train stuff
 private:
 	vector<GameObject*> m_goList;
-	CMap* m_cMap;	// Handle to the tilemaps
+	CMap*	m_cMap;							// Handle to the tilemaps
+	Train	Train1;							// Train
+	Train  *m_Train;
+	Vector3 TrainStation, EndPosition;
 };
 
 #endif

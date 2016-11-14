@@ -131,9 +131,13 @@ void SceneBase::Init()
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 	meshList[GEO_TILESET1] = MeshBuilder::GenerateTileSet("GEO_TILESET", 80, 8);
 	meshList[GEO_TILESET1]->textureID = LoadTGA("Image//moderntileset.tga");
-	meshList[GEO_COMMUTER] = MeshBuilder::GenerateTile("Commuter", Color(0, 1, 0), 1.f);
+	meshList[GEO_COMMUTER] = MeshBuilder::GenerateTile("GEO_COMMUTER", Color(0, 1, 0), 1.f);
 	//meshList[GEO_COMMUTER] = LoadTGA();
 	meshList[GEO_TILESET1]->textureID = LoadTGA("Image//moderntileset.tga");
+
+	// Train
+	meshList[GEO_TRAIN] = MeshBuilder::GenerateTile("GEO_TRAIN", Color(1, 0, 0), 1.f);
+	//meshList[GEO_TRAIN] = LoadTGA("");
 
 	Math::InitRNG();
 	camera.Init(Vector3(0, 0, 10), Vector3(0, 0, 0), Vector3(0, 1, 0));
@@ -187,7 +191,7 @@ void SceneBase::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, fl
 	if (!mesh || mesh->textureID <= 0)
 		return;
 	Mtx44 ortho;
-	ortho.SetToOrtho(0, 800, 0, 600, -10, 100);
+	ortho.SetToOrtho(0, 1440, 0, 1440, -10, 10);
 	projectionStack.PushMatrix();
 	projectionStack.LoadMatrix(ortho);
 	viewStack.PushMatrix();
@@ -345,6 +349,11 @@ void SceneBase::Render()
 		);
 	//// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
+
+	stringstream ss;
+	ss.str("");
+	ss << "Timer:         " << Train2.getTimer() ;
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 30, 100, 40);
 }
 
 void SceneBase::Update(double dt)
