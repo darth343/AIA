@@ -117,7 +117,7 @@ void Application::Init()
 
 
 	//Create a window and create its OpenGL context
-	m_window = glfwCreateWindow(m_window_width, m_window_height, "DM2231_Framework", NULL, NULL);
+	m_window = glfwCreateWindow(1440, 1440, "DM2231_Framework", NULL, NULL);
 
 	//If the window couldn't be created
 	if (!m_window)
@@ -146,7 +146,7 @@ void Application::Init()
 	}
 
 	// Hide the cursor
-	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
 	// Set these 2 variables to zero
 	m_dElapsedTime = 0.0;

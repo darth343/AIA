@@ -24,6 +24,7 @@ public:
 	static Mesh* GenerateOBJ(const std::string &meshName, const std::string &file_path);
 	static Mesh* GenerateText(const std::string &meshName, unsigned row, unsigned col);
 	static Mesh* GenerateTileSet(const std::string &meshName, unsigned row, unsigned col);
+	static Mesh* GenerateTile(const std::string &meshName, Color color, float length = 1.f);
 	static Mesh* GenerateMinimap(const std::string &meshName, Color color, float length = 1.f);
 	static Mesh* GenerateMinimapBorder(const std::string &meshName, Color color, float length = 1.f);
 	static Mesh* GenerateMinimapAvatar(const std::string &meshName, Color color, float length = 1.f);

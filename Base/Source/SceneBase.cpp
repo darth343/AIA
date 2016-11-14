@@ -131,6 +131,9 @@ void SceneBase::Init()
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 	meshList[GEO_TILESET1] = MeshBuilder::GenerateTileSet("GEO_TILESET", 80, 8);
 	meshList[GEO_TILESET1]->textureID = LoadTGA("Image//moderntileset.tga");
+	meshList[GEO_COMMUTER] = MeshBuilder::GenerateTile("Commuter", Color(0, 1, 0), 1.f);
+	//meshList[GEO_COMMUTER] = LoadTGA();
+	meshList[GEO_TILESET1]->textureID = LoadTGA("Image//moderntileset.tga");
 
 	Math::InitRNG();
 	camera.Init(Vector3(0, 0, 10), Vector3(0, 0, 0), Vector3(0, 1, 0));
@@ -141,15 +144,15 @@ void SceneBase::RenderTile(Mesh* mesh, unsigned tileID, float size, float x, flo
 	if (!mesh || mesh->textureID <= 0)
 		return;
 	Mtx44 ortho;
-	ortho.SetToOrtho(0, 800, 0, 600, -10, 10);
+	ortho.SetToOrtho(0, 1440, 0, 1440, -10, 10);
 	projectionStack.PushMatrix();
 	projectionStack.LoadMatrix(ortho);
 	viewStack.PushMatrix();
 	viewStack.LoadIdentity();
 	modelStack.PushMatrix();
 	modelStack.LoadIdentity();
-	modelStack.Translate(x, y, 0);
-	modelStack.Scale(size, size, 1);
+	modelStack.Translate((int)x, (int)y, 0);
+	modelStack.Scale((int)size, (int)size, 1);
 	glUniform1i(m_parameters[U_LIGHTENABLED], 0);
 	glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 1);
 	glActiveTexture(GL_TEXTURE0);
@@ -173,7 +176,7 @@ void SceneBase::RenderTileMap(Mesh* mesh, CMap* map)
 		{
 			//if (map->theMap[y][x].BlockID != 0)
 			{
-				RenderTile(mesh, map->theMap[y][x].BlockID, 32, x * map->GetTileSize() - MapOffset.x, y * map->GetTileSize() - MapOffset.y);
+				RenderTile(mesh, map->theMap[y][x].BlockID, map->GetTileSize(), x * map->GetTileSize() - MapOffset.x, y * map->GetTileSize() - MapOffset.y);
 			}
 		}
 	}
@@ -329,8 +332,8 @@ void SceneBase::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	Mtx44 perspective;
-	perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
-	//perspective.SetToOrtho(-80, 80, -60, 60, -1000, 1000);
+	//perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
+	perspective.SetToOrtho(0, 1440, 0, 1440, -10, 10);
 	projectionStack.LoadMatrix(perspective);
 
 	//// Camera matrix

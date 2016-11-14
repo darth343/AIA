@@ -28,3 +28,8 @@ void Bus::SetSpeed(float x)
 {
 	this->speed = x;
 }
+
+void Bus::Update(double dt)
+{
+	
+}

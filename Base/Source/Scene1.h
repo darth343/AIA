@@ -26,6 +26,7 @@ public:
 	void GOupdate(double dt); // Main GO Collisions
 	void MapUpdate(double dt);
 private:
+	vector<GameObject*> m_goList;
 	CMap* m_cMap;	// Handle to the tilemaps
 };
 

@@ -2,8 +2,9 @@
 
 GameObject::GameObject(Vector3 scale)
 : scale(scale)
+, ObjectTileHeight(1)
+, ObjectTileWidth(1)
 {
-	Min.SetZero(); Max = scale;
 	active = true;
 }
 bool GameObject::CheckCollision(Vector3 playerPos, Vector3 mapOffset, CMap* m_cMap)
