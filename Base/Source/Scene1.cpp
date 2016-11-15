@@ -63,13 +63,13 @@ void Scene1::Init()
 	m_Train->type = GameObject::GO_TRAIN;
 	m_Train->active = true;
 	m_Train->scale = m_cMap->GetTileSize();
-	m_Train->position.Set(27, 547, 0);
+	m_Train->position.Set(27, 1344, 0);
 	m_Train->ObjectTileHeight = 2.5;
 	m_Train->ObjectTileWidth = 8;
 	m_goList.push_back(m_Train);
 
-	TrainStation.Set(27, 547, 0);
-	EndPosition.Set(675, 547, 0);
+	TrainStation.Set(27, 1344, 0);
+	EndPosition.Set(675, 1344, 0);
 }
 
 void Scene1::TrainUpdate(double dt)
