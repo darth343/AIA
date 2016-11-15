@@ -42,6 +42,9 @@ void Train::TrainUpdate(double dt)
 		open = true;
 	}
 
+	cout << "alighting " << commAlighting << endl;
+	cout << "boarding " << commBoarding << endl;
+
 	// Open state
 	if (open && TrainState == S_OPEN)
 	{
@@ -69,8 +72,8 @@ void Train::TrainUpdate(double dt)
 		//}
 	}
 
-	// Close state and after 3 seconds
-	if (TrainState == S_CLOSE && timer > 3.f)
+	// Close state and after 2 seconds
+	if (TrainState == S_CLOSE && timer > 2.f)
 	{
 		open = false;
 		// Change to Move state and reset timer to 0
@@ -82,7 +85,7 @@ void Train::TrainUpdate(double dt)
 
 
 	// At Move state
-	if (TrainState == S_MOVE && timer > 35.f)
+	if (TrainState == S_MOVE && timer > 31.f)
 	{
 		// Change state back to Stop state and reset timer to 0
 		TrainState = S_STOP;

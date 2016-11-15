@@ -26,6 +26,7 @@ private:
 	float timer;
 	const float waitLimit = 5;
 	const int speed = 100;
+	const int RunSpeed = 180;
 	bool nearestBusStopFound;
 	Tile nearestBusStop;
 	Tile nextTile;

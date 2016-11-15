@@ -55,7 +55,7 @@ private:
 	TRAIN_POS    TrainPos;
 	float timer;							// Timer 
 	const float speed = 800.f;				// Train speed
-	const int maxCommuters = 100;			// Max commuters on the train
+	const int maxCommuters = 500;			// Max commuters on the train
 	Vector3 trainPos, stationPos, endPos;   // Positions
 	int commBoarding;						// Number of commuters boarding
 	int commAlighting;						// Number of commuters alighting
