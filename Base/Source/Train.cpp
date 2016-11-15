@@ -6,9 +6,9 @@ Train::Train()
 	TrainState = S_STOP;
 	TrainPos = P_NONE;
 	timer = 0.f;
-	trainPos.Set(27, 547, 0);
-	stationPos.Set(27, 547, 0);
-	endPos.Set(680, 547, 0);
+	//trainPos.Set(27, 547, 0);
+	//stationPos.Set(27, 547, 0);
+	//endPos.Set(680, 547, 0);
 	open = false;
 }
 
@@ -18,16 +18,17 @@ Train::~Train()
 
 void Train::TrainUpdate(double dt)
 {
-	timer++;
+	timer += dt;
 
-	cout << "TIMER:       "  << timer <<  " sec" << endl;
+
+	//cout << "TIMER:       "  << timer <<  " sec" << endl;
 	//cout << "TRAIN STATE: " << TrainState << endl;
 	//cout << endl;
 	//cout << "POS state: " << TrainPos << endl;
 	//cout << "END: " << endPos.x << endl;
 
 	// Stop state to Open state after 3 seconds
-	if (timer > 30 && TrainState == S_STOP)
+	if (timer > 3.f && TrainState == S_STOP)
 	{
 		timer = 0;
 		TrainState = S_OPEN;  // open
@@ -69,7 +70,7 @@ void Train::TrainUpdate(double dt)
 	}
 
 	// Close state and after 3 seconds
-	if (TrainState == S_CLOSE && timer > 30)
+	if (TrainState == S_CLOSE && timer > 3.f)
 	{
 		open = false;
 		// Change to Move state and reset timer to 0
@@ -81,7 +82,7 @@ void Train::TrainUpdate(double dt)
 
 
 	// At Move state
-	if (TrainState == S_MOVE && timer > 200)
+	if (TrainState == S_MOVE && timer > 35.f)
 	{
 		// Change state back to Stop state and reset timer to 0
 		TrainState = S_STOP;

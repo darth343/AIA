@@ -68,10 +68,10 @@ void Commuter::Update(double dt, CMap* m_cMap)
 		else
 		{
 			Move(dt, m_cMap->GetTileSize());
-			if (isBusNearby())
-			{
-				state = WALK;
-			}
+			//if (isBusNearby())
+			//{
+			//	state = WALK;
+			//}
 		}
 		break;
 	case WAIT:

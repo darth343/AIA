@@ -29,8 +29,6 @@ public:
 private:
 	vector<GameObject*> m_goList;
 	CMap*	m_cMap;							// Handle to the tilemaps
-	Train	Train1;							// Train
-	Train  *m_Train;
 	Vector3 TrainStation, EndPosition;
 };
 

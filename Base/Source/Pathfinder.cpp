@@ -38,7 +38,7 @@ void Pathfinder::ClearLists()
 
 void Pathfinder::FindPath(Tile startTile, Tile endTile, CMap* m_cMap)
 {
-	for (int i = 0; i < 100; ++i)
+	for (int i = 0; i < 50; ++i)
 	{
 		if (!initializedStartandEnd)
 		{

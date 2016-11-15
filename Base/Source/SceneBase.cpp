@@ -132,6 +132,10 @@ void SceneBase::Init()
 	meshList[GEO_TILESET1] = MeshBuilder::GenerateTileSet("GEO_TILESET", 80, 8);
 	meshList[GEO_TILESET1]->textureID = LoadTGA("Image//moderntileset.tga");
 	meshList[GEO_COMMUTER] = MeshBuilder::GenerateTile("GEO_COMMUTER", Color(0, 1, 0), 1.f);
+	meshList[GEO_GREENTILE] = MeshBuilder::GenerateTile("GEO_COMMUTER", Color(0, 1, 0), 1.f);
+	meshList[GEO_REDTILE] = MeshBuilder::GenerateTile("GEO_COMMUTER", Color(1, 0, 0), 1.f);
+	meshList[GEO_BLUETILE] = MeshBuilder::GenerateTile("GEO_COMMUTER", Color(0, 0, 1), 1.f);
+	meshList[GEO_YELLOWTILE] = MeshBuilder::GenerateTile("GEO_COMMUTER", Color(1, 1, 0), 1.f);
 	//meshList[GEO_COMMUTER] = LoadTGA();
 	meshList[GEO_TILESET1]->textureID = LoadTGA("Image//moderntileset.tga");
 
