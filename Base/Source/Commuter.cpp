@@ -14,6 +14,30 @@ Commuter::~Commuter()
 }
 
 
+void Commuter::FindBusStop(CMap* m_cMap)
+{
+	if (state == WALK)
+	{
+		Vector3 TilePos;
+		TilePos.x = position.x / m_cMap->GetTileSize();
+		TilePos.y = position.y / m_cMap->GetTileSize();
+		if (!nearestBusStopFound)
+		{
+			Vector3 lowestdist = Vector3(9999, 9999, 0);
+			for (int i = 0; i < m_cMap->BusStops.size(); i++)
+			{
+				Vector3 dist = TilePos - m_cMap->BusStops[i].Pos;
+				if (lowestdist.Length() > dist.Length())
+				{
+					nearestBusStop = m_cMap->BusStops[i];
+					lowestdist = dist;
+				}
+			}
+			nearestBusStopFound = true;
+		}
+	}
+}
+
 void Commuter::Update(double dt, CMap* m_cMap)
 {
 	switch (state)
@@ -25,19 +49,9 @@ void Commuter::Update(double dt, CMap* m_cMap)
 					 Vector3 TilePos;
 					 TilePos.x = position.x / m_cMap->GetTileSize();
 					 TilePos.y = position.y / m_cMap->GetTileSize();
-					 if (!nearestBusStopFound)
+					 if (nearestBusStopFound == false)
 					 {
-						 Vector3 lowestdist = Vector3(9999, 9999, 0);
-						 for (int i = 0; i < m_cMap->BusStops.size(); i++)
-						 {
-							 Vector3 dist = TilePos - m_cMap->BusStops[i].Pos;
-							 if (lowestdist.Length() > dist.Length())
-							 {
-								 nearestBusStop = m_cMap->BusStops[i];
-								 lowestdist = dist;
-							 }
-						 }
-						 nearestBusStopFound = true;
+						FindBusStop(m_cMap);
 					 }
 					 pathfinder.FindPath(m_cMap->theMap[TilePos.y][TilePos.x], nearestBusStop, m_cMap);
 					 if (pathfinder.found)
@@ -68,10 +82,16 @@ void Commuter::Update(double dt, CMap* m_cMap)
 		else
 		{
 			Move(dt, m_cMap->GetTileSize());
-			//if (isBusNearby())
-			//{
-			//	state = WALK;
-			//}
+			if (pathfinder.pathToEnd.empty())
+			{
+				Vector3 TilePos;
+				TilePos.x = position.x / m_cMap->GetTileSize();
+				TilePos.y = position.y / m_cMap->GetTileSize();
+				int RandomBusStop = Math::RandIntMinMax(0, m_cMap->BusStops.size() - 1);
+				nearestBusStopFound = true;
+				pathfinder.FindPath(m_cMap->theMap[TilePos.y][TilePos.x], m_cMap->BusStops[RandomBusStop], m_cMap);
+				state = WALK;
+			}
 		}
 		break;
 	case WAIT:
@@ -131,6 +151,7 @@ void Commuter::Move(double dt, int TileSize)
 				state = WAIT;
 			else if (state == WAIT)
 				state = LEAVE;
+			
 		}
 		else
 		{

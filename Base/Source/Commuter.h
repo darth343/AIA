@@ -16,6 +16,7 @@ public:
 	};
 	virtual void Update(double dt, CMap* map);
 	void Move(double dt, int TileSize);
+	void FindBusStop(CMap* map);
 	bool isBusNearby(){ return true; };
 	STATES getState()
 	{

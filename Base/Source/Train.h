@@ -29,26 +29,20 @@ public:
 	Train();
 	~Train();
 
-	virtual void TrainUpdate(double dt);
-	// Checks if all the commuters have boarded and all the commuters have alighted
-	bool checkTrainIsReady();
+	virtual void TrainUpdate(double dt);	// Train updates
+	bool checkTrainIsReady();				// Checks if all the commuters have boarded and all the commuters have alighted
+	void MoveTO(double dt);					// Train move TO endPos
+	void MoveFROM(double dt);				// Train move FROM endPos
 
 	// Getters and setters
 	void setCommutersBoarded(int x);
-	int getCommutersBoarded();
+	int getCommutersBoarded();				// Random no. of boarded comm up to 500
 	void setCommutersAlighted(int x);
-	int getCommutersAlighted();
+	int getCommutersAlighted();				// Random no. of alighted comm up to 500
 	int getTrainPosState();
 	void setTrainPosState(int x);
 	int getTrainState();
 	float getTimer();
-
-	// Train move TO endPos
-	void MoveTO(double dt);
-	// Train move FROM endPos
-	void MoveFROM(double dt);
-
-	
 
 private:
 	TRAIN_STATES TrainState;

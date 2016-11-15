@@ -20,13 +20,6 @@ void Train::TrainUpdate(double dt)
 {
 	timer += dt;
 
-
-	//cout << "TIMER:       "  << timer <<  " sec" << endl;
-	//cout << "TRAIN STATE: " << TrainState << endl;
-	//cout << endl;
-	//cout << "POS state: " << TrainPos << endl;
-	//cout << "END: " << endPos.x << endl;
-
 	// Stop state to Open state after 3 seconds
 	if (timer > 3.f && TrainState == S_STOP)
 	{
@@ -35,15 +28,8 @@ void Train::TrainUpdate(double dt)
 		// RNG 1 time only for commuters when at Open state
 		getCommutersBoarded();
 		getCommutersAlighted();
-
-		//cout << getCommutersBoarded() << endl;
-		//cout << getCommutersAlighted() << endl;
-
 		open = true;
 	}
-
-	cout << "alighting " << commAlighting << endl;
-	cout << "boarding " << commBoarding << endl;
 
 	// Open state
 	if (open && TrainState == S_OPEN)
@@ -64,12 +50,6 @@ void Train::TrainUpdate(double dt)
 			TrainState = S_CLOSE;
 			timer = 0;
 		}
-
-		//if (commAlighting == 0 && commBoarding == 0)
-		//{
-		//	TrainState = S_CLOSE;
-		//	timer = 0;
-		//}
 	}
 
 	// Close state and after 2 seconds
