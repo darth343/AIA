@@ -8,6 +8,7 @@
 #include "LoadTGA.h"
 #include <sstream>
 #include "SpriteAnimation.h"
+#include "Commuter.h"
 
 Scene1::Scene1()
 : m_cMap(NULL)
@@ -30,6 +31,7 @@ void Scene1::Reset()
 void Scene1::Init()
 {
 	SceneBase::Init();
+
 	// Initialise and load the tile map
 	m_cMap = new CMap();
 	m_cMap->Init(Application::GetInstance().GetScreenHeight(), Application::GetInstance().GetScreenWidth(), 24);
@@ -37,14 +39,24 @@ void Scene1::Init()
 	//std::cout << m_cMap->GetNumOfTiles_Height() << m_cMap->GetNumOfTiles_Width() << std::endl;
 
 	// Commuters
-	GameObject* commuter1 = new GameObject();
-	commuter1->active = true;
-	commuter1->type = GameObject::GO_COMMUTER;
-	commuter1->scale = m_cMap->GetTileSize();
-	commuter1->position.Set(0, 0, 0);
-	commuter1->ObjectTileHeight = 2;
-	commuter1->ObjectTileWidth = 6;
-	m_goList.push_back(commuter1);
+
+	for (int i = 0; i < 10; i++)
+	{
+		Commuter* commuter1 = new Commuter();
+		commuter1->active = true;
+		commuter1->type = GameObject::GO_COMMUTER;
+		commuter1->scale = m_cMap->GetTileSize();
+		Vector3 randomCommuterPos(Math::RandIntMinMax(0, m_cMap->GetNumOfTiles_Width() - 1), Math::RandIntMinMax(0, m_cMap->GetNumOfTiles_Height() - 1), 0);
+		while (m_cMap->theMap[randomCommuterPos.y][randomCommuterPos.x].BlockID != 33)
+		{
+			randomCommuterPos.Set(Math::RandIntMinMax(0, m_cMap->GetNumOfTiles_Width()-1), Math::RandIntMinMax(0, m_cMap->GetNumOfTiles_Height() - 1), 0);
+		}
+		std::cout << m_cMap->theMap[randomCommuterPos.y][randomCommuterPos.x].BlockID << " " << randomCommuterPos << std::endl;
+		commuter1->position.Set(randomCommuterPos.x * m_cMap->GetTileSize(), randomCommuterPos.y * m_cMap->GetTileSize(), 0);
+		//commuter1->position.Set(1 * m_cMap->GetTileSize(), 1 * m_cMap->GetTileSize(), 0);
+		m_goList.push_back(commuter1);
+	}
+
 
 	// Train
 	m_Train = new Train;
@@ -111,6 +123,14 @@ void Scene1::PlayerUpdate(double dt)
 
 void Scene1::GOupdate(double dt)
 {
+	for (int i = 0; i < m_goList.size(); i++)
+	{
+		if (m_goList[i]->type == GameObject::GO_COMMUTER)
+		{
+			Commuter* temp = dynamic_cast<Commuter*>(m_goList[i]);
+			temp->Update(dt, m_cMap);
+		}
+	}
 }
 
 void Scene1::MapUpdate(double dt)
@@ -123,11 +143,7 @@ void Scene1::Update(double dt)
 	TrainUpdate(dt);
 
 	fps = (float)(1.f / dt);
-
-	for (int i = 0; i < m_goList.size(); ++i)
-	{
-
-	}
+	GOupdate(dt);
 }
 
 void Scene1::RenderMap()
@@ -173,7 +189,7 @@ void Scene1::RenderGO()
 			{
 				for (int k = 0; k < m_goList[i]->ObjectTileHeight; k++)
 				{
-					Render2DMesh(meshList[GEO_COMMUTER], false, m_cMap->GetTileSize() * 0.5, m_goList[i]->position.x + (j * m_cMap->GetTileSize() * 0.5), m_goList[i]->position.y + (k * m_cMap->GetTileSize() * 0.5), false);
+					Render2DMesh(meshList[GEO_COMMUTER], false, m_cMap->GetTileSize(), m_goList[i]->position.x + (j * m_cMap->GetTileSize() * 0.5), m_goList[i]->position.y + (k * m_cMap->GetTileSize() * 0.5), false);
 				}
 			}
 			break;
@@ -182,7 +198,7 @@ void Scene1::RenderGO()
 			{
 				for (int k = 0; k < m_goList[i]->ObjectTileHeight; k++)
 				{
-					Render2DMesh(meshList[GEO_TRAIN], false, m_cMap->GetTileSize() * 0.5, m_goList[i]->position.x + (j * m_cMap->GetTileSize() * 0.5), m_goList[i]->position.y + (k * m_cMap->GetTileSize() * 0.5), false);
+					Render2DMesh(meshList[GEO_TRAIN], false, m_cMap->GetTileSize(), m_goList[i]->position.x + (j * m_cMap->GetTileSize() * 0.5), m_goList[i]->position.y + (k * m_cMap->GetTileSize() * 0.5), false);
 				}
 			}
 			break;

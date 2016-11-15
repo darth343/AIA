@@ -237,7 +237,7 @@ void SceneBase::Render2DMeshWScale(Mesh *mesh, const bool enableLight, const flo
 {
 	glDisable(GL_CULL_FACE);
 	Mtx44 ortho;
-	ortho.SetToOrtho(0, 800, 0, 600, -10, 10);
+	ortho.SetToOrtho(0, 1440, 0, 1440, -10, 10);
 	projectionStack.PushMatrix();
 	projectionStack.LoadMatrix(ortho);
 	viewStack.PushMatrix();
@@ -286,7 +286,7 @@ void SceneBase::Render2DMeshWScale(Mesh *mesh, const bool enableLight, const flo
 void SceneBase::Render2DMesh(Mesh *mesh, bool enableLight, float size, float x, float y, bool flip)
 {
 	Mtx44 ortho;
-	ortho.SetToOrtho(0, 800, 0, 600, -10, 10);
+	ortho.SetToOrtho(0, 1440, 0, 1440, -10, 10);
 	projectionStack.PushMatrix();
 	projectionStack.LoadMatrix(ortho);
 	viewStack.PushMatrix();

@@ -26,7 +26,7 @@ public:
 	
 	vector<vector<Tile>> theMap;
 	vector<vector<Node *>> theNodeMap;
-
+	vector<Tile> BusStops;
 	int theScreen_Height;
 	int theScreen_Width;
 	int theNumOfTiles_Height;		// Number of tiles in the Map's height

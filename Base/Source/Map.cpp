@@ -98,6 +98,8 @@ bool CMap::LoadFile(const string mapName)
 					int ID = std::stoi(tempString);
 					Tile tempTile(Vector3(x, y), ID);
 					theMap[y][x] = tempTile;
+					if (ID == 520)
+						BusStops.push_back(theMap[y][x]);
 				}
 			}
 		}

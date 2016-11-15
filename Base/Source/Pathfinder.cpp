@@ -38,7 +38,7 @@ void Pathfinder::ClearLists()
 
 void Pathfinder::FindPath(Tile startTile, Tile endTile, CMap* m_cMap)
 {
-	for (int i = 0; i < 20; ++i)
+	for (int i = 0; i < 100; ++i)
 	{
 		if (!initializedStartandEnd)
 		{
@@ -140,6 +140,9 @@ void Pathfinder::ContinueSearch(CMap* m_cMap)
 
 void Pathfinder::openNode(int posX, int posY, float newCost, Node * parent, CMap* m_cMap)
 {
+	if (posX < 0 || posY < 0 || posX >= m_cMap->GetNumOfTiles_Width() || posY >= m_cMap->GetNumOfTiles_Height())
+		return;
+
 	if (m_cMap->theMap[posY][posX].shouldCollide)
 	{
 		return;
