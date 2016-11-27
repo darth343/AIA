@@ -60,16 +60,16 @@ public:
 
 private:
 
-	BUS_STATES BusState;				// Bus state
-	BUS_DIRECTIONS  BusDirection;					// Bus direction state
-	float timer;						// Timer
-	float speed;						// Speed
-	int currCommuters;					// Commuters
-	const int totalCommuters = 50;		// Total commuters
-	Vector3 busStop1, busStop2;			// Positions of bus stop 1 and 2
-	const int probability = 50;			// Probability for FULL and NOT FULL
-	int randomInt;				     	// Random integer
-	bool once;							// So that only random once
+	BUS_STATES BusState;									// Bus state
+	BUS_DIRECTIONS  BusDirection;							// Bus direction state
+	float timer;											// Timer
+	float speed;											// Speed
+	int currCommuters;										// Commuters
+	const int totalCommuters = 50;							// Total commuters
+	Vector3 busStop1, busStop2, busStop3, busStop4;			// Positions of bus stop 1 and 2
+	const int probability = 50;								// Probability for FULL and NOT FULL
+	int randomInt;				     						// Random integer
+	bool once;												// So that only random once
 
 };
 

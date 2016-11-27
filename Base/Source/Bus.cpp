@@ -10,6 +10,7 @@ Bus::Bus()
 	speed = 45.f;
 	busStop1.Set(130, 0, 0);
 	busStop2.Set(0, 470, 0);
+	busStop3.Set(1260, 0, 0);
 	once = false;
 }
 
@@ -54,10 +55,13 @@ void Bus::Update(double dt, CMap* m_cMap)
 		}
 	}
 
+	// Bus moves down to bus stop 2
 	if (BusState == S_FULL_SPEED && BusDirection == D_DOWN)
 	{
+		// If bus have yet to reach bus stop 2
 		if (this->position.y >= busStop2.y)
 		{
+			// Keep moving down
 			this->MovingDown(dt);
 		}
 		else  // If bus reach bus stop 2
@@ -70,8 +74,10 @@ void Bus::Update(double dt, CMap* m_cMap)
 		}
 	}
 
+	// When bus reach bus stop 2
 	if (BusState == S_STOP && BusDirection == D_NONE)
 	{
+		// If bus is empty
 		if (randomInt <= probability)
 		{
 			cout << "HOHO";
@@ -82,11 +88,15 @@ void Bus::Update(double dt, CMap* m_cMap)
 		{
 			cout << "HUHU";
 			this->MovingFULL(dt);
+			BusState = S_FULL_SPEED;
+			BusDirection = D_RIGHT;
 		}
 	}
 	
-
-	
+	// When bus reach bus stop 3
+	//if (this->position.x >= busStop1.x && BusState = S_FULL_SPEED && BusDirection == D_RIGHT)
+	//{
+	//}
 	
 }
 
