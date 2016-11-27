@@ -66,6 +66,10 @@ public:
 		GEO_YELLOWTILE,
 		GEO_TRAIN,
 		GEO_TEXT,
+		GEO_ORANGE,
+		GEO_GREY,
+		GEO_BROWN,
+		GEO_PINK,
 		NUM_GEOMETRY,
 	};
 	SceneBase();

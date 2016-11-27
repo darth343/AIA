@@ -143,6 +143,12 @@ void SceneBase::Init()
 	meshList[GEO_TRAIN] = MeshBuilder::GenerateTile("GEO_TRAIN", Color(1, 0, 0), 1.f);
 	//meshList[GEO_TRAIN] = LoadTGA("");
 
+	// Bus
+	meshList[GEO_ORANGE] = MeshBuilder::GenerateTile("GEO_BUS", Color(1, 0.3f, 0.2f), 1.f);
+	meshList[GEO_GREY] = MeshBuilder::GenerateTile("GEO_BUS", Color(0.8f, 0.8f, 0.8f), 1.f);
+	meshList[GEO_BROWN] = MeshBuilder::GenerateTile("GEO_BUS", Color(0.8f, 0.3f, 0.1f), 1.f);
+	meshList[GEO_PINK] = MeshBuilder::GenerateTile("GEO_BUS", Color(1, 0.4f, 0.7), 1.f);
+
 	Math::InitRNG();
 	camera.Init(Vector3(0, 0, 10), Vector3(0, 0, 0), Vector3(0, 1, 0));
 }

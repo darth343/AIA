@@ -63,7 +63,6 @@ void Scene1::Init()
 	m_Train->type = GameObject::GO_TRAIN;
 	m_Train->active = true;
 	m_Train->scale = m_cMap->GetTileSize();
-	//m_Train->position.Set(27, 547, 0);
 	m_Train->position.Set(50, 1325, 0);
 	m_Train->ObjectTileHeight = 3;
 	m_Train->ObjectTileWidth = 8;
@@ -71,6 +70,17 @@ void Scene1::Init()
 
 	TrainStation.Set(50, 547, 0);
 	EndPosition.Set(1285, 547, 0);
+
+	// Bus
+	Bus* m_Bus = new Bus();
+	m_Bus->type = GameObject::GO_BUS;
+	m_Bus->active = true;
+	m_Bus->scale = m_cMap->GetTileSize();
+	m_Bus->position.Set(10, 1000, 0);
+	m_Bus->ObjectTileHeight = 3;
+	m_Bus->ObjectTileWidth = 3;
+	m_goList.push_back(m_Bus);
+
 }
 
 void Scene1::TrainUpdate(double dt)
@@ -90,13 +100,15 @@ void Scene1::GOupdate(double dt)
 			Commuter* temp = dynamic_cast<Commuter*>(m_goList[i]);
 			temp->Update(dt, m_cMap);
 		}
+		if (m_goList[i]->type == GameObject::GO_BUS)
+		{
+			Bus* temp = dynamic_cast<Bus*>(m_goList[i]);
+			temp->Update(dt);
+		}
 		if (m_goList[i]->type == GameObject::GO_TRAIN)
 		{
 			Train* temp = dynamic_cast<Train*>(m_goList[i]);
 			temp->TrainUpdate(dt);
-			//cout << "TRAIN: " << m_Train->position.x << endl;
-			//cout << "END: " << EndPosition.x << endl;
-			//cout << "TRAIN STATE: " << temp->getTrainState() << endl;
 
 			// Check if train in Move state
 			if (temp->getTrainState() == 3)
@@ -224,6 +236,15 @@ void Scene1::RenderGO()
 				}
 			}
 			break;
+		case GameObject::GO_BUS:
+			for (int j = 0; j < m_goList[i]->ObjectTileWidth; j++)
+			{
+				for (int k = 0; k < m_goList[i]->ObjectTileHeight; k++)
+				{
+					//Train* temp = dynamic_cast<Train*>(m_goList[i]);
+					Render2DMesh(meshList[GEO_ORANGE], false, m_cMap->GetTileSize(), m_goList[i]->position.x + (j * m_cMap->GetTileSize() * 0.5), m_goList[i]->position.y + (k * m_cMap->GetTileSize() * 0.5), false);
+				}
+			}
 		}
 	}
 }

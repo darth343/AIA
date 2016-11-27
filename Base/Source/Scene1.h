@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "CharacterData.h"
 #include "Train.h"
+#include "Bus.h"
 
 class Scene1 : public SceneBase
 {

@@ -6,9 +6,6 @@ Train::Train()
 	TrainState = S_STOP;
 	TrainPos = P_NONE;
 	timer = 0.f;
-	//trainPos.Set(27, 547, 0);
-	//stationPos.Set(27, 547, 0);
-	//endPos.Set(680, 547, 0);
 	open = false;
 }
 
