@@ -30,6 +30,8 @@ public:
 		P_SEVEN,
 		P_EIGHT,
 		P_END,
+		P_MID1,
+		P_MID2,
 	};
 
 	enum BUS_DIRECTIONS
@@ -48,15 +50,13 @@ public:
 	void UpdateTurning(double dt);							// Update when the bus take the turning path
 	void UpdateStraight(double dt);							// Update when the bus take the straight path
 
-	void MovingRight(double dt);                  
-	void MovingDown(double dt);
-	void MovingUp(double dt);
+	void MovingRight(double dt, float speed);                  
+	void MovingDown(double dt, float speed);
+	void MovingUp(double dt, float speed);
 
 	// Getters and setters
 	int GetCommuters();
 	void SetCommuters(int x);
-	float GetSpeed();
-	void SetSpeed(float x);
 	int getState();
 
 
@@ -69,7 +69,8 @@ private:
 	BUS_DIRECTIONS  BusDirection;							// Bus direction state
 	BUS_POS BusPosition;									// Bus pos
 	float timer;											// Timer
-	float speed;											// Speed
+	const float fullSpeed = 500.f,							// Speeds
+				halfSpeed = 250.f;						
 	int currCommuters;										// Commuters
 	const int totalCommuters = 50;							// Total commuters
 	Vector3 pos1,											// Positions
@@ -81,9 +82,10 @@ private:
 			pos7,
 			pos8;
 	const int probability = 50;								// Probability for FULL and NOT FULL
-	int randomInt, randomInt2;				     			// Random integer
+	int randomInt, randomInt2, randomInt3;				    // Random integer
 	bool once;												// So that only random once
 	bool once2;
+	bool once3;
 
 };
 

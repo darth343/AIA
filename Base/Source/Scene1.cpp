@@ -250,6 +250,10 @@ void Scene1::RenderGO()
 					{
 						Render2DMesh(meshList[GEO_BROWN], false, m_cMap->GetTileSize(), m_goList[i]->position.x + (j * m_cMap->GetTileSize() * 0.5), m_goList[i]->position.y + (k * m_cMap->GetTileSize() * 0.5), false);
 					}
+					else if (temp->getState() == 2)
+					{
+						Render2DMesh(meshList[GEO_PINK], false, m_cMap->GetTileSize(), m_goList[i]->position.x + (j * m_cMap->GetTileSize() * 0.5), m_goList[i]->position.y + (k * m_cMap->GetTileSize() * 0.5), false);
+					}
 				}
 			}
 		}

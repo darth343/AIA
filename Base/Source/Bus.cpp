@@ -8,18 +8,17 @@ Bus::Bus()
 	BusDirection = D_NONE;
 	BusPosition = P_ONE;
 	timer = 0.f;
-	//speed = 45.f;
-	speed = 500.f;
 	pos1.Set(130, 0, 0);
 	pos2.Set(0, 470, 0);
 	pos3.Set(540, 0, 0);
-	pos4.Set(0, 1000, 0);
-	pos5.Set(850, 0, 0);
+	pos4.Set(540, 1000, 0);
+	pos5.Set(850, 1000, 0);
 	pos6.Set(850, 470, 0);
 	pos7.Set(1260, 0, 0);
-	pos8.Set(0, 1000, 0);
+	pos8.Set(1260, 1000, 0);
 	once = false;
 	once2 = false;
+	once3 = false;
 }
 
 Bus::~Bus()
@@ -51,7 +50,7 @@ void Bus::UpdateTurning(double dt)
 	if (BusState == S_FULL_SPEED && BusDirection == D_NONE && BusPosition == P_ONE)
 	{
 		// Bus move at full speed to the right >
-		this->MovingRight(dt);
+		this->MovingRight(dt, fullSpeed);
 		// Generate a random int from 1-100
 		randomInt = RandomInteger(1, 100);
 		// Generate once only
@@ -102,7 +101,7 @@ void Bus::UpdateTurning(double dt)
 		if (this->position.y >= pos2.y)
 		{
 			// Keep moving down
-			this->MovingDown(dt);
+			this->MovingDown(dt, fullSpeed);
 		}
 		else  // If bus reach bus stop 2
 		{
@@ -148,7 +147,7 @@ void Bus::UpdateTurning(double dt)
 		if (this->position.x < pos3.x)
 		{
 			//BusPosition = P_FOUR;
-			this->MovingRight(dt);
+			this->MovingRight(dt, fullSpeed);
 		}
 		else if (this->position.y < pos4.y)
 		{
@@ -163,24 +162,25 @@ void Bus::UpdateTurning(double dt)
 	{
 		if (this->position.y < pos4.y)
 		{
-			this->MovingUp(dt);
+			this->MovingUp(dt, fullSpeed);
 		}
 		else if (this->position.y >= pos4.y)
 		{
-
+			BusState = S_HALF_SPEED;
 			BusDirection = D_RIGHT;
 			BusPosition = P_FIVE;
 		}
 	}
 
-	if (BusState == S_FULL_SPEED && BusDirection == D_RIGHT && BusPosition == P_FIVE)
+	if (BusState == S_HALF_SPEED && BusDirection == D_RIGHT && BusPosition == P_FIVE)
 	{
 		if (this->position.x < pos5.x)
 		{
-			this->MovingRight(dt);
+			this->MovingRight(dt, halfSpeed);
 		}
 		else
 		{
+			BusState = S_FULL_SPEED;
 			BusDirection = D_DOWN;
 			BusPosition = P_SIX;
 		}
@@ -190,7 +190,7 @@ void Bus::UpdateTurning(double dt)
 	{
 		if (this->position.y > pos6.y)
 		{
-			this->MovingDown(dt);
+			this->MovingDown(dt, fullSpeed);
 		}
 		else
 		{
@@ -203,7 +203,7 @@ void Bus::UpdateTurning(double dt)
 	{
 		if (this->position.x < pos7.x)
 		{
-			this->MovingRight(dt);
+			this->MovingRight(dt, fullSpeed);
 		}
 		else // Reached position 7
 		{
@@ -242,7 +242,7 @@ void Bus::UpdateTurning(double dt)
 		// Bus move up to reach position 8
 		if (this->position.y < pos8.y)
 		{
-			this->MovingUp(dt);
+			this->MovingUp(dt, fullSpeed);
 		}
 		else // Bus reached position 8
 		{
@@ -259,7 +259,7 @@ void Bus::UpdateTurning(double dt)
 				BusState = S_FULL_SPEED;
 				BusDirection = D_RIGHT;
 				BusPosition = P_END;
-				this->MovingRight(dt);
+				this->MovingRight(dt, fullSpeed);
 			}
 		}
 	}
@@ -278,7 +278,7 @@ void Bus::UpdateTurning(double dt)
 
 	if (BusState == S_FULL_SPEED && BusDirection == D_RIGHT && BusPosition == P_END)
 	{
-		this->MovingRight(dt);
+		this->MovingRight(dt, fullSpeed);
 	}
 
 	// Reset bus to original position
@@ -297,13 +297,14 @@ void Bus::UpdateTurning(double dt)
 
 void Bus::UpdateStraight(double dt)
 {
+
 	// The bus moves to bus stop 1
 	if (BusState == S_FULL_SPEED && BusDirection == D_NONE && BusPosition == P_ONE)
 	{
 		// If bus havent reach bus stop 1
 		if (this->position.x < pos1.x)
 		{
-			this->MovingRight(dt);
+			this->MovingRight(dt, fullSpeed);
 		}
 		else // If bus reach bus stop 1
 		{
@@ -318,7 +319,7 @@ void Bus::UpdateStraight(double dt)
 			else // If bus is FULL
 			{
 				BusState = S_FULL_SPEED;
-				BusPosition = P_TWO;
+				BusPosition = P_FOUR;
 				BusDirection = D_RIGHT;
 			}
 		}
@@ -327,50 +328,86 @@ void Bus::UpdateStraight(double dt)
 	// When bus is empty, state is stop and then after 3 sec move again
 	if (BusState == S_STOP && BusDirection == D_NONE && BusPosition == P_ONE)
 	{
+
 		timer += dt;
 
 		if (timer > 3.0f)
 		{
 			BusState = S_FULL_SPEED;
-			BusPosition = P_TWO;
+			BusPosition = P_FOUR;
 			BusDirection = D_RIGHT;
 		}
 	}
 
-	// When bus leave bus stop 1
-	if (BusState == S_FULL_SPEED && BusPosition == P_TWO && BusDirection == D_RIGHT)
+
+	// Bus going to position 4
+	if (BusState == S_FULL_SPEED, BusPosition == P_FOUR, BusDirection == D_RIGHT)
 	{
-		// Reset
-		once = false;
-		timer = 0;
-
-		// If the bus haven't reach bus stop 2
-		if (this->position.x < pos7.x)
+		if (this->position.x < pos4.x)
 		{
-			this->MovingRight(dt);
+			this->MovingRight(dt, fullSpeed);
 		}
-		else // If bus reaches bus stop 2
+		else
 		{
-			randomInt = 20;
-			once = true;
+			BusState = S_HALF_SPEED;
+			BusPosition = P_FIVE;
+			BusDirection = D_RIGHT;
 
+		}
+	}
+
+	// Bus going to position 5
+	if (BusState == S_HALF_SPEED && BusPosition == P_FIVE && BusDirection == D_RIGHT)
+	{
+		if (this->position.x < pos5.x)
+		{
+			this->MovingRight(dt, halfSpeed);
+		}
+		else
+		{
+			BusState = S_FULL_SPEED;
+			BusPosition = P_EIGHT;
+			BusDirection = D_RIGHT;
+			once = false;
+		}
+	}
+
+
+	if (BusState == S_FULL_SPEED && BusPosition == P_EIGHT && BusDirection == D_RIGHT)
+	{
+		if (this->position.x < pos8.x)
+		{
+			this->MovingRight(dt, fullSpeed);
+		}
+		else
+		{
+			if (once3 == false)
+			{
+				randomInt3 = rand() % 100;
+				once3 = true;
+			}
+			
 			// If bus is EMPTY
-			if (randomInt <= probability)
+			if (randomInt3 < probability)
 			{
 				BusState = S_STOP;
 			}
-			else // If bus is FULL
+			else   // If bus is FULL
 			{
 				BusState = S_FULL_SPEED;
 				BusPosition = P_END;
 				BusDirection = D_RIGHT;
 			}
+
 		}
 	}
-
-	if (BusState == S_STOP && BusPosition == P_TWO && BusDirection == D_RIGHT)
+	
+	if (BusState == S_STOP && BusPosition == P_EIGHT && BusDirection == D_RIGHT)
 	{
 		timer += dt;
+
+		cout << timer << endl;
+
 		if (timer > 3.0f)
 		{
 			BusState = S_FULL_SPEED;
@@ -379,9 +416,16 @@ void Bus::UpdateStraight(double dt)
 		}
 	}
 
+
 	if (BusState == S_FULL_SPEED && BusPosition == P_END && BusDirection == D_RIGHT)
 	{
-		this->MovingRight(dt);
+		this->MovingRight(dt, fullSpeed);
+	}
+
+	// When the bus get out of screen, make the bus appear on the left side of the screen again
+	if (BusState == S_FULL_SPEED && BusPosition == P_END && BusDirection == D_RIGHT)
+	{
+		this->MovingRight(dt, fullSpeed);
 	}
 
 	// Reset bus to original position
@@ -394,15 +438,16 @@ void Bus::UpdateStraight(double dt)
 		once = false;
 		timer = 0;
 		once2 = false;
+		once3 = false;
 	}
 }
 
-void Bus::MovingUp(double dt)
+void Bus::MovingUp(double dt, float speed)
 {
 	this->position.y += speed * dt;
 }
 
-void Bus::MovingDown(double dt)
+void Bus::MovingDown(double dt, float speed)
 {
 	this->position.y -= speed * dt;
 }
@@ -422,17 +467,7 @@ void Bus::SetCommuters(int x)
 	this->currCommuters = x;
 }
 
-float Bus::GetSpeed()
-{
-	return speed;
-}
-
-void Bus::SetSpeed(float x)
-{
-	this->speed = x;
-}
-
-void Bus::MovingRight(double dt)
+void Bus::MovingRight(double dt, float speed)
 {
 	this->position.x += speed * dt;
 }
@@ -441,6 +476,8 @@ int Bus::getState()
 {
 	if (BusState == S_FULL_SPEED)
 		return 0;
-	if (BusState == S_STOP)
+	if (BusState == S_HALF_SPEED)
 		return 1;
+	if (BusState == S_STOP)
+		return 2;
 }
