@@ -241,8 +241,15 @@ void Scene1::RenderGO()
 			{
 				for (int k = 0; k < m_goList[i]->ObjectTileHeight; k++)
 				{
-					//Train* temp = dynamic_cast<Train*>(m_goList[i]);
-					Render2DMesh(meshList[GEO_ORANGE], false, m_cMap->GetTileSize(), m_goList[i]->position.x + (j * m_cMap->GetTileSize() * 0.5), m_goList[i]->position.y + (k * m_cMap->GetTileSize() * 0.5), false);
+					Bus* temp = dynamic_cast<Bus*>(m_goList[i]);
+					if (temp->getState() == 0)
+					{
+						Render2DMesh(meshList[GEO_GREY], false, m_cMap->GetTileSize(), m_goList[i]->position.x + (j * m_cMap->GetTileSize() * 0.5), m_goList[i]->position.y + (k * m_cMap->GetTileSize() * 0.5), false);
+					}
+					else if (temp->getState() == 1)
+					{
+						Render2DMesh(meshList[GEO_BROWN], false, m_cMap->GetTileSize(), m_goList[i]->position.x + (j * m_cMap->GetTileSize() * 0.5), m_goList[i]->position.y + (k * m_cMap->GetTileSize() * 0.5), false);
+					}
 				}
 			}
 		}

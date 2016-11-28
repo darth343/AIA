@@ -19,6 +19,7 @@ Bus::Bus()
 	pos7.Set(1260, 0, 0);
 	pos8.Set(0, 1000, 0);
 	once = false;
+	once2 = false;
 }
 
 Bus::~Bus()
@@ -27,9 +28,14 @@ Bus::~Bus()
 
 void Bus::Update(double dt, CMap* m_cMap)
 {
-	randomInt = rand() % 100;
+	if (once2 == false)
+	{
+		randomInt2 = rand() % 100;
+		cout << randomInt2 << endl;
+		once2 = true;
+	}
 
-	if (randomInt <= probability)
+	if (randomInt2 <= probability)
 	{
 		UpdateTurning(dt);
 	}
@@ -208,13 +214,11 @@ void Bus::UpdateTurning(double dt)
 			if (randomInt <= probability)
 			{
 				BusState = S_STOP;
-				cout << "lel";
 			}
 			else  // The bus is FULL
 			{
 				BusDirection = D_UP;
 				BusPosition = P_EIGHT;
-				cout << "lmao";
 			}
 		}
 	}
@@ -235,7 +239,6 @@ void Bus::UpdateTurning(double dt)
 	{
 		once = false;
 		timer = 0.f;
-		cout << "tiztiz";
 		// Bus move up to reach position 8
 		if (this->position.y < pos8.y)
 		{
@@ -287,14 +290,13 @@ void Bus::UpdateTurning(double dt)
 		BusPosition = P_ONE;
 		once = false;
 		timer = 0;
+		once2 = false;
 	}
 
 }
 
 void Bus::UpdateStraight(double dt)
 {
-	// UpdateTurning(dt);
-
 	// The bus moves to bus stop 1
 	if (BusState == S_FULL_SPEED && BusDirection == D_NONE && BusPosition == P_ONE)
 	{
@@ -391,6 +393,7 @@ void Bus::UpdateStraight(double dt)
 		BusPosition = P_ONE;
 		once = false;
 		timer = 0;
+		once2 = false;
 	}
 }
 
@@ -432,4 +435,12 @@ void Bus::SetSpeed(float x)
 void Bus::MovingRight(double dt)
 {
 	this->position.x += speed * dt;
+}
+
+int Bus::getState()
+{
+	if (BusState == S_FULL_SPEED)
+		return 0;
+	if (BusState == S_STOP)
+		return 1;
 }

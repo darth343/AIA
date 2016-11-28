@@ -37,7 +37,7 @@ public:
 		D_DOWN = 0,
 		D_UP,
 		D_RIGHT,
-		D_NONE,								   // Moving straight
+		D_NONE,								  
 	};
 
 	Bus();
@@ -57,6 +57,7 @@ public:
 	void SetCommuters(int x);
 	float GetSpeed();
 	void SetSpeed(float x);
+	int getState();
 
 
 	// Test
@@ -66,7 +67,7 @@ private:
 
 	BUS_STATES BusState;									// Bus state
 	BUS_DIRECTIONS  BusDirection;							// Bus direction state
-	BUS_POS BusPosition;
+	BUS_POS BusPosition;									// Bus pos
 	float timer;											// Timer
 	float speed;											// Speed
 	int currCommuters;										// Commuters
@@ -80,8 +81,9 @@ private:
 			pos7,
 			pos8;
 	const int probability = 50;								// Probability for FULL and NOT FULL
-	int randomInt;				     						// Random integer
+	int randomInt, randomInt2;				     			// Random integer
 	bool once;												// So that only random once
+	bool once2;
 
 };
 
