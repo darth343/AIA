@@ -19,13 +19,6 @@ public:
 		S_STOP,
 	};
 
-	enum BUS_SEATS
-	{
-		B_FULL = 0,
-		B_EMPTY,
-		B_NONE,
-	};
-
 	enum BUS_POS
 	{
 		P_ONE = 0,
@@ -36,6 +29,7 @@ public:
 		P_SIX,
 		P_SEVEN,
 		P_EIGHT,
+		P_END,
 	};
 
 	enum BUS_DIRECTIONS
@@ -51,15 +45,12 @@ public:
 
 	// Bus update
 	virtual void Update(double dt, CMap* m_cMap = NULL);
+	void UpdateTurning(double dt);							// Update when the bus take the turning path
+	void UpdateStraight(double dt);							// Update when the bus take the straight path
 
-	void MovingFULL(double dt);                   // Move the bus at full speed
-	void MovingHALF(double dt);					  // Move the bus at half speed	
-
+	void MovingRight(double dt);                  
 	void MovingDown(double dt);
 	void MovingUp(double dt);
-	
-	void rollNum();								  // Randomly generate a number for probabilty
-
 
 	// Getters and setters
 	int GetCommuters();
